@@ -17,9 +17,15 @@ export function Checkout() {
   });
 
   const handlePlaceOrder = async () => {
-    if (!cart.items.length) return;
     if (!shipping.street || !shipping.city || !shipping.zipCode) {
       toast.error("Please fill in all shipping fields");
+      return;
+    }
+    
+    await loadCart(userId);
+
+    if (!cart.items.length) {
+      toast.error("Cart is empty");
       return;
     }
 
