@@ -42,8 +42,7 @@ export function Checkout() {
     try {
       await api.post("/orders", orderPayload);
       toast.success("Order placed successfully!");
-      loadCart(userId);
-      navigate("/orders");
+      await loadCart(userId);
     } catch (err) {
       toast.error(err.message || "Failed to place order");
     } finally {
