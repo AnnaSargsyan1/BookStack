@@ -1,0 +1,14 @@
+[
+    {"id":1,"category":"Classics"},
+    {"id":2,"category":"Mystery"},
+    {"id":3,"category":"Horror"},
+    {"id":4,"category":"Historical Fiction"},
+    {"id":5,"category":"Philosophy"},
+    {"id":6,"category":"Fantasy"},
+    {"id":7,"category":"Adventure"},
+    {"id":8,"category":"Science Fiction"},
+    {"id":9,"category":"Romance"},
+    {"id":10,"category":"Family"},
+    {"id":11,"category":"Children"},
+    {"id":12,"category":"Satire"}
+]
