@@ -7,7 +7,9 @@ import { Trash2 } from "lucide-react";
 
 export function CartItem({ book }) {
     const { userId, loadCart } = useContext(GuestContext);
+    const [isUpdating, setIsUpdating] = useState(false);
     const updateQuantity = (productId, newQuantity) => {
+        setIsUpdating(true);
         if (newQuantity < 1) { return toast.error("Minimum quantity is 1"); }
 
         if (!productId || !newQuantity) {
@@ -23,7 +25,7 @@ export function CartItem({ book }) {
                 } else {
                     toast.error("Something went wrong");
                 }
-            });
+            }).finally(() => setIsUpdating(false));
     }
     const handleRemove = productId => {
         api.delete(`/cart/${userId}/remove/${productId}`)
@@ -45,15 +47,17 @@ export function CartItem({ book }) {
                 <p className="text-gray-500 text-sm">Price: ${book.price.toFixed(2)}</p>
                 <div className="flex items-center gap-2 mt-2">
                     <button
-                        className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                        className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
                         onClick={() => updateQuantity(book.productId, book.quantity - 1)}
+                        disabled={isUpdating}
                     >
                         –
                     </button>
                     <span className="text-gray-800">{book.quantity}</span>
                     <button
-                        className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                        className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
                         onClick={() => updateQuantity(book.productId, book.quantity + 1)}
+                        disabled={isUpdating}
                     >
                         +
                     </button>
