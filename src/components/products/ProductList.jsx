@@ -9,6 +9,7 @@ export function ProductList() {
     const [books, setBooks] = useState([]);
     const [currentCategory, setCurrentCategory] = useState("All");
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         api.get(`/products/category/${currentCategory}`)
         .then(data => {
@@ -20,11 +21,20 @@ export function ProductList() {
             } else {
                 toast.error(err);
             }
-        });
+        }).finally(() => setLoading(false));
     }, [currentCategory]);
     const handleCategoryFilter = useCallback(category => {
         setCurrentCategory(category || "All");
     })
+
+    if (loading) {
+        return (
+          <div className="text-center text-gray-500 py-20">
+            Loading book details...
+          </div>
+        );
+    }
+
     return <div >
         <div className="px-6">
             <CategoryFilter onCategoryFilter={handleCategoryFilter} length={books.length} />
