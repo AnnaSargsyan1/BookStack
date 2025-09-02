@@ -16,23 +16,23 @@ This is a full-stack online shop application built with **React** (frontend) and
 ## Setup and Installation
 
 ### Prerequisites
-- Node.js >= 18
+- Node.js >=  20.19
 - npm or yarn
 - Git
 
 ### Steps
-1. Clone the repository:
 ```bash
+1. Clone the repository:
+
 git clone https://github.com/AnnaSargsyan1/BookStack.git
 
-2. Navigate to the backend folder and install dependencies:
+2. Navigate to the server folder and install dependencies:
 
-cd backend
+cd server
 npm install
 
-3. Navigate to the frontend folder and install dependencies:
+3. In current React directory install dependencies:
 
-cd frontend
 npm install
 
 4. Start the backend server:
@@ -41,14 +41,14 @@ npm run dev
 
 5. Start the frontend server:
 
-npm start
+npm run dev
 
 6. The frontend will be available at http://localhost:3000 and backend at http://localhost:3001 (or your configured port).
+```
+### API Documentation
 
-API Documentation
-
-1. Product Management
-
+#### 1. Product Management
+<pre>  
 Endpoints:
 
 • GET /api/products – Retrieve all products
@@ -67,9 +67,9 @@ Product Data Structure:
   "inStock": true,
   "quantity": 50
 }
-
-2. Shopping Cart Management
-
+</pre>
+#### 2. Shopping Cart Management
+<pre>  
 Endpoints:
 
 • GET /api/cart/:userId – Retrieve user’s cart
@@ -92,16 +92,17 @@ Cart Data Structure:
   "totalAmount": 59.98,
   "createdAt": "2024-01-01T00:00:00Z"
 }
+</pre>
 
-3. Order Management
-
+#### 3. Order Management
+<pre>
 Endpoints:
 
 • POST /api/orders – Create new order
 • GET /api/orders/:userId – Retrieve user’s order history
 
 Order Data Structure:
-
+  
 {
   "id": "order-id",
   "userId": "user-id",
@@ -122,8 +123,11 @@ Order Data Structure:
     "zipCode": "12345"
   }
 }
+</pre>
 
-Frontend Components
+### Frontend Components
+
+```bash
 
 Product Components
 
@@ -153,8 +157,11 @@ Layout Components
 • Footer: Basic footer information
 • Layout: Header, Footer and main block for content
 
+```
 
-Project Structure
+### Project Structure
+
+<pre> 
 bookstore/
 ├─ server/
 │  ├─ models/
@@ -172,19 +179,30 @@ bookstore/
 │  └─ App.js
 ├─ package.json
 └─ README.md
+</pre>
 
-Backend
+#### Backend
+
+```bash
 
 server/routes/: API route handlers
 server/models/: Data handling (carts, orders, products)
 server/db/: JSON files storing products, cart data, and orders
 
-Frontend
+```
+
+#### Frontend
+
+```bash
 
 src/components/: React components
 src/context/: React Context for cart and user management
 
-How to Run the Application
+```
+
+### How to Run the Application
+
+```bash
 
 1. Ensure backend server is running:
 
@@ -194,15 +212,22 @@ npm run dev
 2. Ensure frontend server is running:
 
 cd frontend
-npm start
+npm run dev
 
 3. Open your browser at http://localhost:3000
+
 4. Browse products, add items to cart, adjust quantities, proceed to checkout, and view order history.
 
-Features:
+```
+
+### Features:
+
+```bash
 
 • Browse and filter products by category
 • Add items to cart and adjust quantities
 • Remove single items or clear entire cart
 • Place orders with shipping information
 • View previous order history
+
+```
