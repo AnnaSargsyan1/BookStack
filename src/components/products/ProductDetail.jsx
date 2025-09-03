@@ -3,14 +3,11 @@ import api from "../../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AddToCartButton } from "../cart/AddToCartButton";
-import { GuestContext } from "../../context/GuestContext";
 
 export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [book, setBook] = useState(null);
-  const { userId, cart, loadCart } = useContext(GuestContext);
-  const [quantityInCart, setQuantityInCart] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -19,7 +16,6 @@ export function ProductDetail() {
       .then(data => {
         const bookData = data.data;
         setBook(bookData);
-        setQuantityInCart(cart.items[bookData.productId]?.quantity || 0);
       })
       .catch(err => {
         if (err.response?.status === 404) {
@@ -30,15 +26,6 @@ export function ProductDetail() {
       });
   }, [id, navigate]);
 
-  const handleQuantityChange = (newCount) => {
-    const quantity = Math.max(1, newCount);
-    api.put(`/cart/${userId}/${quantity}`, { productId: id, quantity })
-      .then(() => {
-        loadCart(userId);
-        setQuantityInCart(newCount);
-      })
-      .catch(err => toast.error(err));
-  };
 
   if (!book) {
     return <p className="text-center text-gray-500 mt-20">Loading...</p>;
