@@ -135,6 +135,7 @@ Product Components
 • ProductCard: Individual product display with image, name, price
 • ProductDetail: Detailed view of a single product
 • CategoryFilter: Filter products by category
+• ProductSearch: Search products by user input
 
 Cart Components
 
