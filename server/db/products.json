@@ -63,7 +63,7 @@
     "category": "Horror",
     "imageUrl": "Frankenstein.jpg",
     "inStock": true,
-    "quantity": 45
+    "quantity": 44
   },
   {
     "id": 7,
@@ -74,7 +74,7 @@
     "category": "Classics",
     "imageUrl": "DorianGray.jpg",
     "inStock": true,
-    "quantity": 81
+    "quantity": 80
   },
   {
     "id": 8,
@@ -195,7 +195,7 @@
     "category": "Science Fiction",
     "imageUrl": "CenterOfEarth.jpg",
     "inStock": true,
-    "quantity": 100
+    "quantity": 99
   },
   {
     "id": 19,
@@ -426,6 +426,6 @@
     "category": "Satire",
     "imageUrl": "AnimalFarm.jpg",
     "inStock": true,
-    "quantity": 23
+    "quantity": 21
   }
 ]

@@ -12,7 +12,7 @@ router.get("/:userId", async (req, res) => {
 
     try {
         const cart = await getCartById(userId);
-        const products = await getAll();
+        const { books: products } = await getAll();
 
         const detailedItems = cart.items.map(item => {
             const product = products.find(p => p.id === item.productId);

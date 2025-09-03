@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "Please, provide all fields" });
     }
   
-    const products = await getAll();
+    const { books: products } = await getAll();
   
     let total = 0;
     const validatedItems = [];

@@ -5,22 +5,35 @@ import { CategoryFilter } from "./CategoryFilter";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ProductSearch } from "./ProductSearch";
+import { Pagination } from "../pagination/Pagination";
 
 export function ProductList() {
     const [books, setBooks] = useState([]);
     const [currentCategory, setCurrentCategory] = useState("All");
-    const navigate = useNavigate();
+    
     const [loading, setLoading] = useState(true);
+    
     const [keyword, setKeyword] = useState("");
-    useEffect(() => {
-        api.get(`/products/category/${currentCategory}`)
-        .then(data => {
-            if (keyword) {
-                const regex = new RegExp(keyword.trim(), "i");
-                setBooks(data.data.filter(book => regex.test(book.name)));
-            } else {
-                setBooks(data.data)
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(12);
+    const [total, setTotal] = useState(0);
+
+    const navigate = useNavigate();
+    
+    const fetchBooks = () => {
+
+        api.get("/products", {
+            params: {
+                ...(currentCategory !== "All" && { category: currentCategory }),
+                ...(keyword && { search: keyword }),
+                page: Math.max(page, 1),
+                limit: Math.max(limit, 12)
             }
+        })
+        .then(response => {
+            console.log(response);
+            setBooks(response.data.books);
+            setTotal(response.data.total);
         })
         .catch(err => {
             if (err.response?.status === 404) {
@@ -29,14 +42,19 @@ export function ProductList() {
                 toast.error(err);
             }
         }).finally(() => setLoading(false));
-    }, [currentCategory, keyword]);
+    }
+    useEffect(() => {
+        fetchBooks();
+    }, [currentCategory, keyword, page, limit]);
 
     const handleCategoryFilter = useCallback(category => {
         setCurrentCategory(category || "All");
+        setPage(1);
     });
-
+    
     const handleSearch = keyword => {
         setKeyword(keyword);
+        setPage(1);
     }
 
     if (loading) {
@@ -48,14 +66,20 @@ export function ProductList() {
     }
 
     return <div >
-        <div className="px-6 space-y-4">
+        <div className="px-6">
             <ProductSearch onSearch={handleSearch} />
-            <CategoryFilter onCategoryFilter={handleCategoryFilter} length={books.length} />
+            <CategoryFilter onCategoryFilter={handleCategoryFilter} length={total} />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6">
         {books.map((book) => (
             <ProductCard key={book.id} book={book}/>
         ))}
         </div>
+        <Pagination
+            current={page}
+            total={total}
+            limit={limit}
+            onPageChange={setPage}
+        />
   </div>
 }
