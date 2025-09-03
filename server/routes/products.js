@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getAll, getProductById, getProductByCategory, getCategories } = require("../models/products.js");
+const { getAll, getProductById, getCategories } = require("../models/products.js");
 
 // Get all products
 router.get("/", async (req, res) => {
@@ -27,16 +27,6 @@ router.get("/", async (req, res) => {
 router.get("/categories", async (req, res) => {
     const categories = await getCategories();
     res.status(200).json(categories);
-});
-
-// Get products by category
-router.get("/category/:category", async (req, res) => {
-    const { category } = req.params;
-    const books = await getProductByCategory(category);
-    if (!books.length) {
-        return res.status(404).json({ message: "No such category" });
-    }
-    res.status(200).json(books);
 });
 
 // Get product by ID
