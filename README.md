@@ -9,54 +9,60 @@ This is a full-stack online shop application built with **React** (frontend) and
 2. [API Documentation](#api-documentation)  
 3. [Frontend Components](#frontend-components)  
 4. [Project Structure](#project-structure)  
-5. [How to Run the Application](#how-to-run-the-application)
+5. [How to Run the Application](#how-to-run-the-application)  
+6. [Features](#features)
 
 ---
 
 ## Setup and Installation
 
 ### Prerequisites
-- Node.js >=  20.19
+- Node.js >= 20.19
 - npm or yarn
 - Git
 
 ### Steps
 ```bash
-1. Clone the repository:
-
+# 1. Clone the repository
 git clone https://github.com/AnnaSargsyan1/BookStack.git
 
-2. Navigate to the server folder and install dependencies:
-
+# 2. Navigate to the server folder and install dependencies
 cd server
 npm install
 
-3. In current React directory install dependencies:
-
+# 3. In the React directory, install dependencies
+cd ../frontend
 npm install
 
-4. Start the backend server:
-
+# 4. Start the backend server
+cd ../server
 npm run dev
 
-5. Start the frontend server:
-
+# 5. Start the frontend server
+cd ../frontend
 npm run dev
 
-6. The frontend will be available at http://localhost:3000 and backend at http://localhost:3001 (or your configured port).
+# Frontend: http://localhost:3000
+# Backend: http://localhost:3001 (or your configured port)
 ```
-### API Documentation
+## API Documentation
 
-#### 1. Product Management
-<pre>  
-Endpoints:
+### 1. Product Management
 
-• GET /api/products – Retrieve all products
-• GET /api/products/:id – Retrieve a specific product
-• GET /api/products/category/:category – Retrieve products by category
+**Endpoints:**
 
-Product Data Structure:
+- `GET /api/products` – Retrieve all products  
+  **Query Parameters:**  
+  - `category` *(string, optional)* – Filter products by category name  
+  - `search` *(string, optional)* – Search products by name  
+  - `page` *(number, optional, default: 1)* – Page number for pagination  
+  - `limit` *(number, optional, default: 12)* – Items per page  
 
+- `GET /api/products/:id` – Retrieve a specific product by ID  
+
+**Product Data Structure:**
+
+```json
 {
   "id": "unique-id",
   "name": "Product Name",
@@ -67,19 +73,22 @@ Product Data Structure:
   "inStock": true,
   "quantity": 50
 }
-</pre>
-#### 2. Shopping Cart Management
-<pre>  
-Endpoints:
+```
+---
 
-• GET /api/cart/:userId – Retrieve user’s cart
-• POST /api/cart/:userId/add – Add item to cart
-• PUT /api/cart/:userId/update – Update item quantity
-• DELETE /api/cart/:userId/remove/:productId – Remove item from cart
-• DELETE /api/cart/:userId/clear – Clear entire cart
+### 2. Shopping Cart Management
 
-Cart Data Structure:
+**Endpoints:**
 
+- `GET /api/cart/:userId` – Retrieve a user’s cart  
+- `POST /api/cart/:userId/add` – Add an item to the cart  
+- `PUT /api/cart/:userId/update` – Update item quantity in the cart  
+- `DELETE /api/cart/:userId/remove/:productId` – Remove a single item from the cart  
+- `DELETE /api/cart/:userId/clear` – Clear the entire cart  
+
+**Cart Data Structure:**
+
+```json
 {
   "userId": "user-id",
   "items": [
@@ -92,17 +101,20 @@ Cart Data Structure:
   "totalAmount": 59.98,
   "createdAt": "2024-01-01T00:00:00Z"
 }
-</pre>
+```
+---
 
-#### 3. Order Management
-<pre>
-Endpoints:
+### 3. Order Management
 
-• POST /api/orders – Create new order
-• GET /api/orders/:userId – Retrieve user’s order history
+**Endpoints:**
 
-Order Data Structure:
-  
+- `POST /api/orders` – Create a new order  
+- `GET /api/orders/:userId` – Retrieve a user’s order history  
+- `GET /api/orders/:orderId` – Retrieve details of a single order  
+
+**Order Data Structure:**
+
+```json
 {
   "id": "order-id",
   "userId": "user-id",
@@ -123,112 +135,108 @@ Order Data Structure:
     "zipCode": "12345"
   }
 }
-</pre>
+```
+---
 
-### Frontend Components
+### 4. Frontend Components
+
+**Product Components:**
+
+- `ProductList` – Displays all products in a grid  
+- `ProductCard` – Individual product display with image, name, and price  
+- `ProductDetail` – Detailed view of a single product  
+- `CategoryFilter` – Filter products by category  
+- `ProductSearch` – Search products by user input  
+
+**Cart Components:**
+
+- `Cart` – Displays cart items with quantities and total  
+- `CartItem` – Individual cart item with quantity controls  
+- `AddToCartButton` – Button to add products to cart  
+- `CartHeader` – Cart icon in header showing product quantity  
+
+**Order Components:**
+
+- `Checkout` – Order form with shipping information  
+- `OrderSummary` – Display order details before confirmation  
+- `OrderHistory` – List of a user’s previous orders  
+- `SingleOrder` – Detailed view of a single order  
+- `ShippingForm` – Form for adding shipping details  
+
+**Layout Components:**
+
+- `Header` – Navigation with cart icon and item count  
+- `Footer` – Basic footer information  
+- `Layout` – Header, Footer, and main content wrapper  
+
+**Pagination Component:**
+
+- `Pagination` – Reusable component for navigating through paged lists of products or orders  
+
+*Notes:*  
+- Components are modular and reusable.  
+- Product and cart components update dynamically using React state and context.  
+
+---
+
+### 5. Project Structure
 
 ```bash
-
-Product Components
-
-• ProductList: Displays all products in a grid
-• ProductCard: Individual product display with image, name, price
-• ProductDetail: Detailed view of a single product
-• CategoryFilter: Filter products by category
-• ProductSearch: Search products by user input
-
-Cart Components
-
-• Cart: Displays cart items with quantities and total
-• CartItem: Individual cart item with quantity controls
-• AddToCartButton: Button to add products to cart
-• CartHeader: Cart icon displayed in header with product quantity in cart
-
-Order Components
-
-• Checkout: Order form with shipping information
-• OrderSummary: Display order details before confirmation
-• OrderHistory: List of user’s previous orders
-• SingleOrder: Details of a single order
-• ShippingForm: Form for adding shipping details
-
-Layout Components
-
-• Header: Navigation with cart icon and item count
-• Footer: Basic footer information
-• Layout: Header, Footer and main block for content
-
-```
-
-### Project Structure
-
-<pre> 
 bookstore/
 ├─ server/
-│  ├─ models/
-│  ├─ routes/
-│  ├─ db/
+│  ├─ models/          # Data handling (carts, orders, products)
+│  ├─ routes/          # API route handlers
+│  ├─ db/              # JSON files storing products, cart data, and orders
 │  │  ├─ categories.json
 │  │  ├─ products.json
 │  │  ├─ carts.json
 │  │  └─ orders.json
-│  └─ server.js
+│  └─ server.js        # Main backend server
 ├─ src/
-│  ├─ components/
-│  ├─ context/
-│  ├─ api.js
-│  └─ App.js
+│  ├─ components/      # React components
+│  ├─ context/         # React Context for cart and user management
+│  ├─ api.js           # Axios API wrapper
+│  └─ App.js           # Main React App
 ├─ package.json
 └─ README.md
-</pre>
-
-#### Backend
-
-```bash
-
-server/routes/: API route handlers
-server/models/: Data handling (carts, orders, products)
-server/db/: JSON files storing products, cart data, and orders
-
 ```
+---
 
-#### Frontend
+### 6. How to Run the Application
 
-```bash
+Follow these steps to run the online shop locally:
 
-src/components/: React components
-src/context/: React Context for cart and user management
-
-```
-
-### How to Run the Application
+**1. Backend Setup**
 
 ```bash
-
-1. Ensure backend server is running:
-
-cd backend
+cd server
+npm install
 npm run dev
-
-2. Ensure frontend server is running:
-
-cd frontend
-npm run dev
-
-3. Open your browser at http://localhost:3000
-
-4. Browse products, add items to cart, adjust quantities, proceed to checkout, and view order history.
-
 ```
-
-### Features:
+**2. Frontend Setup**
 
 ```bash
-
-• Browse and filter products by category
-• Add items to cart and adjust quantities
-• Remove single items or clear entire cart
-• Place orders with shipping information
-• View previous order history
-
+npm install
+npm run dev
 ```
+### 3. Open the Application
+
+- Open your browser and go to: [http://localhost:3000](http://localhost:3000)  
+- Ensure both frontend and backend servers are running for full functionality.  
+- You can now browse products, add items to the cart, checkout, and view your order history.
+
+## 7. Features
+
+- **Browse Products** – View all products in a responsive grid.  
+- **Category Filter** – Filter products by category.  
+- **Search Products** – Search products by name in real-time.  
+- **Shopping Cart** – Add items to the cart, update quantities, remove items, or clear the cart.  
+- **Checkout** – Place orders with shipping information.  
+- **Order History** – View previous orders with details of each order.  
+- **Pagination** – Navigate through product or order lists using a reusable pagination component.  
+
+*Notes:*  
+- Designed for **modularity** and **easy extension**.  
+- Supports client-side filtering, search, and pagination.  
+- Works seamlessly with the **React frontend** and **Node.js/Express backend** using JSON files as a simple database.  
+
