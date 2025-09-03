@@ -36,13 +36,6 @@ async function getProductById(id) {
     const { books } = await getAll();
     return books.find(book => book.id === id);
 }
-async function getProductByCategory(category) {
-    const { books } = await getAll();
-    if (category === "All") {
-        return books;
-    }
-    return books.filter(book => book.category === category);
-}
 async function updateProducts(products) {
     await writeFile(productPath, JSON.stringify(products, null, 2), "utf-8");
 }
@@ -50,4 +43,4 @@ async function getCategories() {
     const categories = await readFile(categoryPath, "utf-8");
     return categories ? JSON.parse(categories) : [];
 }
-module.exports = { getAll, getProductById, getProductByCategory, updateProducts, getCategories };
+module.exports = { getAll, getProductById, updateProducts, getCategories };
